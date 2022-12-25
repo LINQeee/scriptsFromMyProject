@@ -42,8 +42,11 @@ public class animationManager : MonoBehaviour
     }
     void Update()
     {
-
-        InvokeRepeating("horizontalCheck", 0, 0.01f);
-        InvokeRepeating("verticalCheck", 0, 0.01f);
+        if (playerMovement.isMovementBlocked)
+        {
+            animator.SetInteger("forwardBackTrigger", 0); animator.SetInteger("leftRightTrigger", 0); return;
+        }
+        horizontalCheck();
+        verticalCheck();
     }
 }

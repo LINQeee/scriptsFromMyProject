@@ -22,7 +22,7 @@ public class cameraShake_Xrotation : MonoBehaviour
 
     private void Update()
     {
-
+        if (playerMovement.isMovementBlocked) return;
         //y
         rotationX -= Input.GetAxis("Mouse Y") * verticalSensetive;
         rotationX = Mathf.Clamp(rotationX, minVertical, maxVertical);                                

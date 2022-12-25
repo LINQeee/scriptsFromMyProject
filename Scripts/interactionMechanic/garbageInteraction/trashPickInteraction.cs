@@ -9,7 +9,6 @@ public class trashPickInteraction : garbageEventInfo, IInteractable
     [SerializeField] private AudioClip pickUpSound;
     void Start()
     {
-        
     }
 
     public string GetDescription()

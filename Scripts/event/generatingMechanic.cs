@@ -18,7 +18,7 @@ public class generatingMechanic : MonoBehaviour
         int countOfObjects = 0;
         foreach (var gameObject in listOfObjects)
         {
-            if (new System.Random().Next(100) % 1 == 0)
+            if (new System.Random().Next(100) % 3 == 0)
             {
                 gameObject.SetActive(true);
                 countOfObjects++;

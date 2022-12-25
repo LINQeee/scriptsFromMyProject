@@ -9,6 +9,8 @@ public class EventManager : MonoBehaviour
     {
         cleaningBroomEvent.Setup();
         garbageEvent.Setup();
+        customerEvent.Setup();
+        GetComponent<electricityEvent>().Setup();
     }
 
 }

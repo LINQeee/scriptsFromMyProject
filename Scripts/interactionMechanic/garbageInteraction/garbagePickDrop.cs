@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,7 +8,8 @@ public class garbagePickDrop : garbageEventInfo
 {
     [SerializeField] private GameObject trash;
     private Animation animationGarbage;
-    
+    public bool a;
+
     void Start()
     {
         trash.SetActive(false);
@@ -15,8 +17,8 @@ public class garbagePickDrop : garbageEventInfo
     }
 
     void Update()
-    {   
-
+    {
+        a = isGarbagePickedUp;
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (!isGarbagePickedUp && !animationGarbage.isPlaying)

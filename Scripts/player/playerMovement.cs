@@ -8,15 +8,12 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    public static bool isInHouse = false;
+    public static bool isMovementBlocked = false;
     [SerializeField] private float speed = 3;
-    [SerializeField] private GameObject player;
-    Animator animator;
-    [SerializeField] private AudioClip stepSound0, stepSound1, stepSound2;
-    [SerializeField] private AudioClip floorStepSound;
+    [SerializeField] GameObject player;
+    private Animator animator;
     private Vector3 moveDefaultValue;
     private Vector3 move;
-    private List<AudioClip> listOfRoadSteps;
     private float cooldownForSound = 0.5f;
     private bool isShifting = false;
 
@@ -27,14 +24,10 @@ public class playerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        listOfRoadSteps = new List<AudioClip>
-    {
-        stepSound0, stepSound1, stepSound2
-    };
     }
 
     private void Update()
-    {
+    {   if (isMovementBlocked) return;
         Vector3 currentPos = transform.position;
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -79,8 +72,6 @@ public class playerMovement : MonoBehaviour
             if (cooldownForSound < 0)
             {
                 cooldownForSound = isShifting ? 0.35f : 0.5f;
-                if (!isInHouse) GetComponent<AudioSource>().PlayOneShot(listOfRoadSteps[new System.Random().Next(3)]);
-                else GetComponent<AudioSource>().PlayOneShot(floorStepSound);
             }
         }
 
