@@ -9,14 +9,14 @@ public class electricityEvent : electricityEventData
 
     public void Setup()
     {
-        fuelPoints = 20;
+        fuelPoints = 180;
         isNeedFillFuel = false;
         InvokeRepeating("electricityTimer", 0, 1);
     }
 
     private void electricityTimer()
     {
-        fuelPoints -= 1;
+     if(fuelPoints>0)   fuelPoints -= 1;
         if(fuelPoints <= 0)
         {
             isNeedFillFuel = true;

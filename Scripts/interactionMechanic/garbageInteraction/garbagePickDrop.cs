@@ -21,8 +21,9 @@ public class garbagePickDrop : garbageEventInfo
         a = isGarbagePickedUp;
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!isGarbagePickedUp && !animationGarbage.isPlaying)
+            if (!isGarbagePickedUp && !animationGarbage.isPlaying && !playerInteraction.isSomethingInHands)
             {
+                playerInteraction.isSomethingInHands = true;
                 animationGarbage.PlayQueued("garbagePick");
                 trash.SetActive(true);
                 isGarbagePickedUp = true;
@@ -38,5 +39,6 @@ public class garbagePickDrop : garbageEventInfo
     private void setInvisible()
     {
         trash.SetActive(false);
+        playerInteraction.isSomethingInHands = false;
     }
 }

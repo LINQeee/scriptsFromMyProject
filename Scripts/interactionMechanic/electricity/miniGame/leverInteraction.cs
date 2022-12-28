@@ -7,10 +7,13 @@ public class leverInteraction : electricityEventData, IInteractable
     [SerializeField] private List<Light> lights = new List<Light>();
     [SerializeField] private Material lightMaterial;
     [SerializeField] private Material generatorLigth;
-    
-    public string GetDescription()
+    private void Start()
     {
-        return isLeverUp ? "raise the lever" : "lower the lever";
+        setLightsOn();
+    }
+    public string GetDescription()
+    {   if (isNeedFillFuel) return "you have to refuel the generator at first";
+        return !isLeverUp ? "raise the lever" : "lower the lever";
     }
 
     public void Interact()

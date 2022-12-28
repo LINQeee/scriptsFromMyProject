@@ -19,7 +19,7 @@ public class dropToTrashInteraction : garbageEventInfo,IInteractable
     }
     public void Interact()
     {
-       if(!isCollectedAlltrash)
+       if(!isCollectedAlltrash && isGarbagePickedUp && countTrashInBag != 0)
         {
             player.GetComponent<Animation>().PlayQueued("garbageDrop");
             player.GetComponent<AudioSource>().PlayOneShot(dropToGarbageSound);

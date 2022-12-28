@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,8 +10,9 @@ public class ButtonManager : customerEventData
     private TextMeshProUGUI textChange;
     public float a;
     public float b;
-    public float c;
+    public double c;
     public float d;
+    public bool z;
     private void Start()
     {
         textChange = text.GetComponent<TextMeshProUGUI>();
@@ -32,7 +34,7 @@ public class ButtonManager : customerEventData
     }
     public void getResult()
     {
-       if(!isMustGo) GameObject.Find("cashUI").GetComponent<casherGame>().stopGame(Mathf.Round((customerBalance_float - sumOfPrices) * 10) / 10 == change_float? true:false);
+       if(!isMustGo) GameObject.Find("cashUI").GetComponent<casherGame>().stopGame(Math.Round(10 * (customerBalance_float - sumOfPrices)) == Math.Round(change_float * 10)? true:false);
     }
     private void displayChange()
     {
@@ -42,7 +44,8 @@ public class ButtonManager : customerEventData
     {
         a = sumOfPrices;
         b = customerBalance_float;
-        c = Mathf.Round((customerBalance_float - sumOfPrices)*10)/10;
+        c = Math.Round(10 * (customerBalance_float - sumOfPrices));
         d = change_float;
+        z = c == d;
     }
 }

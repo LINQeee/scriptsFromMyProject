@@ -12,7 +12,7 @@ public class playerInteraction : MonoBehaviour
     [SerializeField] private GameObject interactionUI;
     [SerializeField] private TextMeshProUGUI interactionText;
     public static GameObject lastSelectedObject;
-
+    public static bool isSomethingInHands = false;
 
     void Update()
     {

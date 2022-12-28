@@ -7,9 +7,10 @@ using UnityEngine.AI;
 public class arriveCustomer : customerEventData
 {
     private GameObject customer;
-   // private GameObject car;
+   //* private GameObject car;
     private AudioSource customerSource;
     [SerializeField] private AudioClip getOutOfCar;
+    [SerializeField] private AudioClip getInCar;
     private Vector3 startPos;
     private NavMeshAgent agent;
     private customerProfile customerProfile;
@@ -19,7 +20,7 @@ public class arriveCustomer : customerEventData
         foreach(Transform transform in transform)
         {
             if(transform.gameObject.CompareTag("customer")) customer = transform.gameObject;
-           // else if(transform.gameObject.CompareTag("car")) car = transform.gameObject;
+           //* else if(transform.gameObject.CompareTag("car")) car = transform.gameObject;
         }
         customerProfile = customer.AddComponent<customerProfile>();
         customer.SetActive(false);
@@ -134,10 +135,10 @@ public class arriveCustomer : customerEventData
     {
         if (agent.remainingDistance > 0) return;
         customer.GetComponent<Animator>().SetBool("isWalking", false);
-        customerSource.PlayOneShot(getOutOfCar);
+        customerSource.PlayOneShot(getInCar);
         isMustGo = false;
         customer.SetActive(false);
-        // GetComponent<Animation>().Play("leave");
+        //! GetComponent<Animation>().Play("leave");
         CancelInvoke("customerLeave");
     }
     private void fillInProfile()

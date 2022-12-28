@@ -6,15 +6,19 @@ public class generatorInteraction : electricityEventData, IInteractable
 {   
     public string GetDescription()
     {
-        return isNeedFillFuel ? "refuel the generator" : "you don't need to refuel the generator";
+        if (isNeedFillFuel)
+        {
+            return isFuelPickedUp ? "refuel the generator" : "you need a fuel to refuel the generator";
+        }
+        return "you don't need to refuel the generator";
     }
     public bool isEnableUI()
     {
-        return true;
+        return !sliderGame.isPlaying;
     }
     public void Interact()
     {
-        if(!sliderGame.isPlaying && !GameObject.Find("fuelMinigame").GetComponent<Animation>().isPlaying && isNeedFillFuel)
+        if(!sliderGame.isPlaying && !GameObject.Find("fuelMinigame").GetComponent<Animation>().isPlaying && isNeedFillFuel && isFuelPickedUp)
         GameObject.Find("fuelMinigame").GetComponent<sliderGame>().startPlaying();
     }
 }

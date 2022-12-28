@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class sliderGame : electricityEventData
@@ -30,7 +31,7 @@ public class sliderGame : electricityEventData
         textProgress.GetComponent<progressBarMovement>().CancelInvoke();
         playerMovement.isMovementBlocked = true;
         isPlaying = true;
-        speed = 1f;
+        speed = 2f;
         goodAttempts = 0;
         onBarSlider.localScale = new Vector3(1f, 1f, 1f);
         textProgress.text = "0%";
@@ -48,21 +49,29 @@ public class sliderGame : electricityEventData
             {
                 if (isSlidersLean)
                 {
+                    player.GetComponent<Animation>().PlayQueued("startPourFuel");
                     vignette.color = new Color(0, 1, 0, 0);
                     InvokeRepeating("vignetteShowUp", 0, 0.01f);
                     goodAttempts++;
-                    if (goodAttempts != 3) onBarSlider.localScale -= new Vector3(onBarSlider.localScale.x / 2, 0, 0);
+                    if (goodAttempts != 3) onBarSlider.localScale -= new Vector3(onBarSlider.localScale.x / 3, 0, 0);
                     textProgress.GetComponent<progressBarMovement>().moveTo((progressBarMovement.percents)goodAttempts);
 
                     if (goodAttempts == 3)
-                    {
+                    {   
                         CancelInvoke("moveSliders");
                         InvokeRepeating("checkForEnd", 0, 1);
                     }
-                    speed *= 2.5f;
+                    speed *= 1.6f;
+                    player.GetComponent<Animation>().PlayQueued("stopPourFuel");
                 }
                 else
                 {
+                    if (player.GetComponent<Animation>().IsPlaying("startPourFuel"))
+                    {
+                        player.GetComponent<Animation>().Stop();
+                        player.GetComponent<AudioSource>().Stop();
+                        player.GetComponent<Animation>().Play("stopPourFuel");
+                    }
                     vignette.color = new Color(1, 0, 0, 0);
                     InvokeRepeating("vignetteShowUp", 0, 0.01f);
                     GetComponent<Animation>().PlayQueued("showDown");
@@ -76,12 +85,15 @@ public class sliderGame : electricityEventData
 
     private void checkForEnd()
     {
-        if (textProgress.text == "100%")
+        if (textProgress.text == "100%" && !player.GetComponent<Animation>().isPlaying)
         {
             GetComponent<Animation>().PlayQueued("showDown");
             playerMovement.isMovementBlocked = false;
             isPlaying = false;
-            isNeedFillFuel = false; 
+            fuelPoints = 20;
+            isNeedFillFuel = false;
+            isFuelPickedUp = false;
+            playerInteraction.isSomethingInHands = false;
             CancelInvoke();
         }
     }

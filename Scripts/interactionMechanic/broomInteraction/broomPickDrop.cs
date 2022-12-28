@@ -16,7 +16,7 @@ public class broomPickDrop : MonoBehaviour, IInteractable
     {
         isBroomPickedUp = false;
         broomStartPos = broomObject.transform.position;
-        broomStartRotation= broomObject.transform.rotation;
+        broomStartRotation = broomObject.transform.rotation;
     }
 
     private void broomPos()
@@ -42,14 +42,16 @@ public class broomPickDrop : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (!isBroomPickedUp)
+        if (!isBroomPickedUp && !playerInteraction.isSomethingInHands)
         {
+            playerInteraction.isSomethingInHands = true;
             isBroomPickedUp = true;
             InvokeRepeating("broomPos", 0, 0.001f);
             player.GetComponent<Animation>().Play("pickBroom");
         }
-        else
-        {
+        else if (isBroomPickedUp)
+        {   
+            playerInteraction.isSomethingInHands = false;
             isBroomPickedUp = false;
             player.GetComponent<Animation>().Play("throwBroom");
         }
@@ -60,4 +62,3 @@ public class broomPickDrop : MonoBehaviour, IInteractable
     }
 }
 
-      
