@@ -121,9 +121,9 @@ public class arriveCustomer : customerEventData
         else if(isMustGo && Vector3.Distance(customer.transform.position, agent.destination) < 0.5f) 
         {
             CancelInvoke("checkCurrentPosition");
-            for(int i = 0; i < customerProducts.Count; i++)
+            foreach(var item in customerProducts)
             {
-                Destroy(customerProducts[i]);
+                Destroy(item);
             }
             
             agent.SetDestination(startPos);

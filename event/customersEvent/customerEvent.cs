@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class customerEvent : customerEventData
 {
     
-    
+    private static GameObject car_customer;
 
     public static void Setup()
     {
@@ -26,8 +26,12 @@ public class customerEvent : customerEventData
         {
             listOfCars_Customers.Add(tran.gameObject);
         }
-        listOfCars_Customers[new System.Random().Next(listOfCars_Customers.Count)].
-            GetComponent<arriveCustomer>().arrive();
+        foreach(var customer in listOfCars_Customers){
+       //     customer.SetActive(false);
+        }
+        car_customer = listOfCars_Customers[new System.Random().Next(listOfCars_Customers.Count)];
+        car_customer.SetActive(true);
+    //    car_customer.GetComponent<arriveCustomer>().arrive();
 
     }
 
