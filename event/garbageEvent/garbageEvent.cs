@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class garbageEvent : garbageEventInfo
+public class garbageEvent : garbageEventData
 {
     public static int alreadyCollected = 0;
     private static List<GameObject> listOfTrash = new List<GameObject>();
     private static bool islistGenerated;
     
     public static void Setup()
-    {
+    {//generate list of trash and reset main values
         if (!islistGenerated) { listOfTrash = generatingMechanic.GetChildren(GameObject.Find("trashs")); islistGenerated = true; }
         foreach (var gameObject in listOfTrash) { gameObject.SetActive(false); }
         totalTrash = generatingMechanic.generate_GetCount(listOfTrash);

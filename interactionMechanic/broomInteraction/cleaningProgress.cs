@@ -21,7 +21,7 @@ public class cleaningProgress : MonoBehaviour
     }
 
     private void setTexture()
-    {
+    {//make dirt transparancy
         switch (cleaningPoints)
         {
             case 0:

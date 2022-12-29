@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dropToTrashInteraction : garbageEventInfo,IInteractable
+public class dropToTrashInteraction : garbageEventData,IInteractable
 {
     [SerializeField] private AudioClip dropToGarbageSound;
     public static bool isCollectedAlltrash;
@@ -20,7 +20,7 @@ public class dropToTrashInteraction : garbageEventInfo,IInteractable
     public void Interact()
     {
        if(!isCollectedAlltrash && isGarbagePickedUp && countTrashInBag != 0)
-        {
+        {//if minigame didn't finisged play animation and add 1 point
             player.GetComponent<Animation>().PlayQueued("garbageDrop");
             player.GetComponent<AudioSource>().PlayOneShot(dropToGarbageSound);
             Invoke("setInvisible", 1);

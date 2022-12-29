@@ -10,7 +10,7 @@ public class cleaningBroomEvent : MonoBehaviour
     private static bool islistGenerated;
 
     public static void Setup()
-    {   
+    {   //generating list of dirts and reseting points
         if(!islistGenerated){ listOfDirts = generatingMechanic.GetChildren(GameObject.Find("dirts")); islistGenerated = true; }
         foreach (var gameObject in listOfDirts) { gameObject.SetActive(false); }
         countOfDirts = generatingMechanic.generate_GetCount(listOfDirts);
@@ -28,7 +28,6 @@ public class cleaningBroomEvent : MonoBehaviour
                 
         }
     }
-
 
 
 }

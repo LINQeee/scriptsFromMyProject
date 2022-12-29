@@ -11,7 +11,7 @@ public class smartphoneControl : MonoBehaviour
     }
 
     void Update()
-    {
+    {//playing phone animations
         if (Input.GetKeyDown(KeyCode.F) && !GetComponent<Animation>().isPlaying)
         {
             if (!isOn) { GetComponent<Animation>().Play("on"); isOn = true; }

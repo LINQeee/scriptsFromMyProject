@@ -11,6 +11,7 @@ public class EventManager : MonoBehaviour
         garbageEvent.Setup();
         customerEvent.Setup();
         GetComponent<electricityEvent>().Setup();
+        //TODO mechanic tracking of minigames progress
     }
 
 }

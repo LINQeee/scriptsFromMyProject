@@ -13,14 +13,14 @@ public class broomPickDrop : MonoBehaviour, IInteractable
     private Quaternion broomStartRotation;
 
     void Start()
-    {
+    {//fill in main values
         isBroomPickedUp = false;
         broomStartPos = broomObject.transform.position;
         broomStartRotation = broomObject.transform.rotation;
     }
 
     private void broomPos()
-    {
+    {//broom is folowing the player
         if (isBroomPickedUp)
         {
             broomObject.transform.position = handPlace.transform.position;

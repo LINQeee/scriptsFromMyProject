@@ -17,6 +17,6 @@ public class createProducts : customerEventData
             arrayOfProducts[i].costOfProduct = arrayOfCosts[i];
             arrayOfProducts[i].photoOfProduct = arrayOftextures[i];
         }
-
+        //just creating list with data of each product 
     }
 }

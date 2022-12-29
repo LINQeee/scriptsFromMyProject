@@ -18,7 +18,8 @@ public class mainDoorOpen : MonoBehaviour, IInteractable
     }
 
     public void Interact()
-    {   if (doorValues.isOpen == false)
+    {   if(doors.GetComponent<Animation>().isPlaying) return;
+        if (doorValues.isOpen == false)
         {
             doors.GetComponent<Animation>().PlayQueued("openDoors");
             doorValues.isOpen = true;

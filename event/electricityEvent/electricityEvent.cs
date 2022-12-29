@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class electricityEvent : electricityEventData
 {
-    [SerializeField] private TextMeshProUGUI text;
-
     public void Setup()
     {
         fuelPoints = 180;
@@ -17,7 +15,7 @@ public class electricityEvent : electricityEventData
     private void electricityTimer()
     {
      if(fuelPoints>0)   fuelPoints -= 1;
-        if(fuelPoints <= 0)
+      else
         {
             isNeedFillFuel = true;
             if (isLeverUp)
@@ -26,11 +24,6 @@ public class electricityEvent : electricityEventData
                 GameObject.Find("switch").GetComponent<Animation>().PlayQueued("leverDown");
             }
         }
-    }
-
-    private void Update()
-    {
-        text.text = fuelPoints.ToString();
     }
 
 }

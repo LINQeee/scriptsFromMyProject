@@ -16,7 +16,7 @@ public class busInteraction : warehouseEventData, IInteractable
     public void Interact()
     {
         if(!isBoxInHand)
-        {Debug.Log("asd");
+        {
             isBoxInHand = true;
             playerInteraction.isSomethingInHands = true;
             currentBox = arrayOfBoxes[new System.Random().Next(7)];
@@ -33,7 +33,7 @@ public class busInteraction : warehouseEventData, IInteractable
     }
 
        private void boxPos()
-    {
+    {//box is folowing the player
         if (isBoxInHand)
         {
             currentBox.transform.position = handPlace.transform.position;

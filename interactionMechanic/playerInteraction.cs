@@ -19,15 +19,15 @@ public class playerInteraction : MonoBehaviour
         InteractionRay();
     }
     private void InteractionRay()
-    {
+    {//creating ray from camera view
         Ray ray = mainCamera.ViewportPointToRay(Vector3.one / 2f);
         RaycastHit hit;
 
         bool isEnableUI = false;
         if (Physics.Raycast(ray, out hit, interactionDistance))
-        {
+        {//if ray hitted other collider
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("interaction"))
-            {
+            {//if collider's layer is interaction
                 IInteractable interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)
                 {

@@ -14,7 +14,6 @@ public class playerMovement : MonoBehaviour
     private Animator animator;
     private Vector3 moveDefaultValue;
     private Vector3 move;
-    private float cooldownForSound = 0.5f;
     private bool isShifting = false;
 
 
@@ -27,20 +26,22 @@ public class playerMovement : MonoBehaviour
     }
 
     private void Update()
-    {   if (isMovementBlocked) return;
+    {   
+        if (isMovementBlocked) return;
         Vector3 currentPos = transform.position;
+        //tracking shift input
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isShifting = true;
-            speed = 6; cooldownForSound = 0.35f;
+            speed = 6;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isShifting = false;
-            speed = 3; cooldownForSound = 0.5f;
+            speed = 3;
         }
 
-
+        //moving player 
         moveDefaultValue = new Vector3(0, -speed, 0);
         float posX = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
@@ -57,22 +58,12 @@ public class playerMovement : MonoBehaviour
         
 
         if (move != moveDefaultValue && currentPos != transform.position)
-        {
+        {//if player didn't move
             if (isShifting)
-            {
+            {//make animations faster if player is running
                 animator.SetFloat("animSpeed", 1.3f);
             }
             else animator.SetFloat("animSpeed", 1f);
-            
-
-
-              cooldownForSound -= Time.deltaTime;
-
-
-            if (cooldownForSound < 0)
-            {
-                cooldownForSound = isShifting ? 0.35f : 0.5f;
-            }
         }
 
     }

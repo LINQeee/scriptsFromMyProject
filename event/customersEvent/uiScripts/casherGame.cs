@@ -17,10 +17,9 @@ public class casherGame : customerEventData
     private Quaternion startRot;
     private Vector3 cameraCashGamePos = new Vector3(-60, 19.4f, -263.3f);
     private Quaternion cameraCashGameRotation = Quaternion.Euler(45, -90, 0);
-    public bool a;
 
     private void Start()
-    {
+    {//fill in main values and creating list of photocards in UI
         change = cashBalance.GetComponent<RectTransform>().GetChild(0).GetComponent<TextMeshProUGUI>();
         customerBalance = cashBalance.GetComponent<RectTransform>().GetChild(1).GetComponent<TextMeshProUGUI>();
         foreach(RectTransform tran in scrollArea.GetComponent<RectTransform>().GetChild(0))
@@ -31,7 +30,7 @@ public class casherGame : customerEventData
     }
 
     public void startGame()
-    {
+    {//blocking movement for player
         playerMovement.isMovementBlocked = true;
         startRot = Camera.main.transform.rotation;
         startPos = Camera.main.transform.position;
@@ -60,15 +59,15 @@ public class casherGame : customerEventData
     }
     private void cameraMoveTowards()
     {
-        if (Vector3.Distance(Camera.main.transform.position, cameraCashGamePos) < 0.001f && Quaternion.Angle(Camera.main.transform.rotation, cameraCashGameRotation) < 0.001f)
+        if (Vector3.Distance(Camera.main.transform.position, cameraCashGamePos) <= 0.001f && Quaternion.Angle(Camera.main.transform.rotation, cameraCashGameRotation) < 0.001f)
         {
             Camera.main.transform.rotation = cameraCashGameRotation;
             Camera.main.transform.position = cameraCashGamePos;
-            InvokeRepeating("cameraMoveBackwards", 0, 0.01f);
             CancelInvoke("cameraMoveTowards");
+            InvokeRepeating("cameraMoveBackwards", 0, 0.01f);
         }
 
-        if (Vector3.Distance(Camera.main.transform.position, cameraCashGamePos) > 0.01f)
+        if (Vector3.Distance(Camera.main.transform.position, cameraCashGamePos) > 0.001f)
         {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, cameraCashGamePos, 0.03f);
         }
@@ -78,7 +77,7 @@ public class casherGame : customerEventData
     { 
         if (isMustMoveCamera)
         {
-            if (Vector3.Distance(Camera.main.transform.position, startPos) < 0.001f && Quaternion.Angle(Camera.main.transform.rotation, startRot) < 0.001f)
+            if (Vector3.Distance(Camera.main.transform.position, startPos) <= 0.001f && Quaternion.Angle(Camera.main.transform.rotation, startRot) < 0.001f)
             {
                 Camera.main.transform.rotation = startRot;
                 Camera.main.transform.position = startPos;
@@ -87,15 +86,11 @@ public class casherGame : customerEventData
                 CancelInvoke("cameraMoveBackwards");
             }
 
-            if (Vector3.Distance(Camera.main.transform.position, startPos) > 0.01f)
+            if (Vector3.Distance(Camera.main.transform.position, startPos) > 0.001f)
             {
                 Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, startPos, 0.03f);
             }
             Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, startRot, 0.03f);
         }
-    }
-    private void Update()
-    {
-        a = isMustMoveCamera;
     }
 }

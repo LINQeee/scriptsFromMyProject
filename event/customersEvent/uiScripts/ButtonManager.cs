@@ -8,11 +8,6 @@ public class ButtonManager : customerEventData
 {
     [SerializeField] private GameObject text;
     private TextMeshProUGUI textChange;
-    public float a;
-    public float b;
-    public double c;
-    public float d;
-    public bool z;
     private void Start()
     {
         textChange = text.GetComponent<TextMeshProUGUI>();
@@ -33,19 +28,14 @@ public class ButtonManager : customerEventData
         displayChange();
     }
     public void getResult()
-    {
-       if(!isMustGo) GameObject.Find("cashUI").GetComponent<casherGame>().stopGame(Math.Round(10 * (customerBalance_float - sumOfPrices)) == Math.Round(change_float * 10)? true:false);
+    {//closing game and sending how player passed the game
+       if(!isMustGo) GameObject.Find("cashUI").GetComponent<casherGame>().stopGame(
+        Math.Round(10 * (customerBalance_float - sumOfPrices)) == Math.Round(change_float * 10)? true:false
+        );
     }
     private void displayChange()
     {
         textChange.text = $"Change: {change_float}";
     }
-    private void Update()
-    {
-        a = sumOfPrices;
-        b = customerBalance_float;
-        c = Math.Round(10 * (customerBalance_float - sumOfPrices));
-        d = change_float;
-        z = c == d;
-    }
+
 }

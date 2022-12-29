@@ -26,7 +26,7 @@ public class sliderGame : electricityEventData
     [SerializeField] private TextMeshProUGUI textProgress;
     [SerializeField] private GameObject player;
     public void startPlaying()
-    {
+    {//reseting main values
         progressBarMovement.percentProgress = 1;
         textProgress.GetComponent<progressBarMovement>().CancelInvoke();
         playerMovement.isMovementBlocked = true;
@@ -48,30 +48,33 @@ public class sliderGame : electricityEventData
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (isSlidersLean)
-                {
+                {//if player hitted the slider
                     player.GetComponent<Animation>().PlayQueued("startPourFuel");
+                    //show green vignette
                     vignette.color = new Color(0, 1, 0, 0);
                     InvokeRepeating("vignetteShowUp", 0, 0.01f);
                     goodAttempts++;
+                    //make slider smaller
                     if (goodAttempts != 3) onBarSlider.localScale -= new Vector3(onBarSlider.localScale.x / 3, 0, 0);
                     textProgress.GetComponent<progressBarMovement>().moveTo((progressBarMovement.percents)goodAttempts);
 
                     if (goodAttempts == 3)
-                    {   
+                    {   //if player won the minigame
                         CancelInvoke("moveSliders");
-                        InvokeRepeating("checkForEnd", 0, 1);
+                        StartCoroutine(checkForEnd());
                     }
                     speed *= 1.6f;
                     player.GetComponent<Animation>().PlayQueued("stopPourFuel");
                 }
                 else
-                {
+                {//if player didn't hit the slider
                     if (player.GetComponent<Animation>().IsPlaying("startPourFuel"))
                     {
                         player.GetComponent<Animation>().Stop();
                         player.GetComponent<AudioSource>().Stop();
                         player.GetComponent<Animation>().Play("stopPourFuel");
                     }
+                    //show red vignette
                     vignette.color = new Color(1, 0, 0, 0);
                     InvokeRepeating("vignetteShowUp", 0, 0.01f);
                     GetComponent<Animation>().PlayQueued("showDown");
@@ -83,10 +86,10 @@ public class sliderGame : electricityEventData
         }
     }
 
-    private void checkForEnd()
+    private IEnumerator checkForEnd()
     {
-        if (textProgress.text == "100%" && !player.GetComponent<Animation>().isPlaying)
-        {
+        yield return new WaitUntil(() => textProgress.text == "100%" && !player.GetComponent<Animation>().isPlaying);
+        
             GetComponent<Animation>().PlayQueued("showDown");
             playerMovement.isMovementBlocked = false;
             isPlaying = false;
@@ -94,8 +97,6 @@ public class sliderGame : electricityEventData
             isNeedFillFuel = false;
             isFuelPickedUp = false;
             playerInteraction.isSomethingInHands = false;
-            CancelInvoke();
-        }
     }
 
     private void vignetteShowUp()

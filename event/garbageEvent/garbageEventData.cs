@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class garbageEventInfo : MonoBehaviour
+public class garbageEventData : MonoBehaviour
 {
     protected readonly int limitOfTrash = 3;
     protected static int countTrashInBag;

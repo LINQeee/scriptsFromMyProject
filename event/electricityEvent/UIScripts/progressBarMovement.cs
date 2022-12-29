@@ -15,7 +15,7 @@ public class progressBarMovement : MonoBehaviour
     }
 
     public void moveTo(percents percent)
-    {
+    {//moving progress bar according minigame progress
             switch (percent)
             {
                 case percents.thirty:
@@ -72,12 +72,5 @@ public class progressBarMovement : MonoBehaviour
         thirty = 1,
         sixty = 2,
         hundred = 3
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z)) moveTo(percents.thirty);
-        if (Input.GetKeyDown(KeyCode.X)) moveTo(percents.sixty);
-        if (Input.GetKeyDown(KeyCode.C)) moveTo(percents.hundred);
     }
 }

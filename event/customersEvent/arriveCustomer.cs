@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class arriveCustomer : customerEventData
 {
     private GameObject customer;
-   //* private GameObject car;
     private AudioSource customerSource;
     [SerializeField] private AudioClip getOutOfCar;
     [SerializeField] private AudioClip getInCar;
@@ -20,24 +19,18 @@ public class arriveCustomer : customerEventData
         foreach(Transform transform in transform)
         {
             if(transform.gameObject.CompareTag("customer")) customer = transform.gameObject;
-           //* else if(transform.gameObject.CompareTag("car")) car = transform.gameObject;
         }
         customerProfile = customer.AddComponent<customerProfile>();
         customer.SetActive(false);
         customerSource = customer.GetComponent<AudioSource>();
         agent = customer.GetComponent<NavMeshAgent>();
-        
     }
 
-    public void arrive()
+    public IEnumerator arrive()
     {
-        GetComponent<Animation>().Play("arrive");
-        InvokeRepeating("customerArrive", 0.1f, 0.1f);
-    }
-    
-    private void customerArrive()
-    { 
-        if (GetComponent<Animation>().isPlaying) return;
+        GetComponent<Animation>().Play("arrive");//start animation of car and waiting until it ends
+        yield return new WaitUntil(() => !GetComponent<Animation>().isPlaying);
+        //start checking position of customer and setting random destination for customer 
         InvokeRepeating("checkCurrentPosition", 0, 0.1f);
         customer.SetActive(true);
         customerSource.PlayOneShot(getOutOfCar);
@@ -45,39 +38,43 @@ public class arriveCustomer : customerEventData
         agent.SetDestination(buyingPositions[new System.Random().Next(buyingPositions.Count)]);
         customer.GetComponent<Animator>().SetBool("isWalking", true);
         customerProfile.isNearShelving = true;
-        CancelInvoke("customerArrive");
+        
     }
-    private void customerGotoCasher()
+    
+    private IEnumerator gotoCasher()
     {
+        customerProfile.isNearShelving = false;
+        customer.GetComponent<Animator>().SetBool("isWalking", false);
+
+        for(int i = 0; i < 6 - new System.Random().Next(6); i++) 
+        { 
+        //creating list for customer with random count of products
+        customerProfile.listOfId.Add(new System.Random().Next(39));
+        }
+
+        yield return new WaitForSeconds(5);
+        //going to casher
         agent.SetDestination(casherPos);
         customer.GetComponent<Animator>().SetBool("isWalking", true);
         customerProfile.isNearCasher = true;
     }
     
-    void checkCurrentPosition()
+    private void onCash()
     {
-        if(customerProfile.isNearShelving && Vector3.Distance(customer.transform.position,agent.destination) < 0.5f)
-        {
-            Debug.Log("ups");
-            customerProfile.isNearShelving = false;
+        customerProfile.isNearCasher = false;
             customer.GetComponent<Animator>().SetBool("isWalking", false);
-            fillInProfile();
-            Invoke("customerGotoCasher", 5);
-        }
-        else if(customerProfile.isNearCasher && Vector3.Distance(customer.transform.position, agent.destination) < 0.5f)
-        {
-            Debug.Log("aps");
-            customerProfile.isNearCasher = false;
-            customer.GetComponent<Animator>().SetBool("isWalking", false);
+            //reset values for minigame
             isSomeoneWaitingForPay = true;
             currentCustomer = customerProfile;
             customerBalance_float = 0;
             change_float = 0;
             sumOfPrices = 0;
+            
             for (int i = 0; i < currentCustomer.listOfId.Count; i++)
-            {
+            {//calculate sum of customer's products
                 sumOfPrices += arrayOfProducts[currentCustomer.listOfId[i]].costOfProduct;
             }
+            //calculating sum of money that customer will give to player
             switch (sumOfPrices)
             {
                 case < 1:
@@ -111,42 +108,46 @@ public class arriveCustomer : customerEventData
                     customerBalance_float = 50;
                     break;
             }
+            //fill in UI prices, names and photos of products and spawning customer's proucts on casher
             for(int i = 0; i < currentCustomer.listOfId.Count; i++)
             {
                customerProducts.Add(Instantiate(arrayOfProducts[currentCustomer.listOfId[i]].modelOfProduct, placesOnCasher[i],
                     arrayOfProducts[currentCustomer.listOfId[i]].modelOfProduct.transform.rotation));
             }
-
-        }
-        else if(isMustGo && Vector3.Distance(customer.transform.position, agent.destination) < 0.5f) 
-        {
-            CancelInvoke("checkCurrentPosition");
-            foreach(var item in customerProducts)
-            {
-                Destroy(item);
-            }
-            
-            agent.SetDestination(startPos);
-            customer.GetComponent<Animator>().SetBool("isWalking", true);
-            InvokeRepeating("customerLeave", 0.1f, 0.1f);
-        }
     }
-    private void customerLeave()
-    {
-        if (agent.remainingDistance > 0) return;
+
+    private IEnumerator gotoCar()
+    {//stopping checking customer's position and deleting products on casher
+        CancelInvoke("checkCurrentPosition");
+        foreach(var item in customerProducts)
+        {
+            Destroy(item);
+        }
+        //customer going to car
+        agent.SetDestination(startPos);
+        customer.GetComponent<Animator>().SetBool("isWalking", true);
+
+        yield return new WaitUntil(() => Vector3.Distance(customer.transform.position, startPos) < 0.6f);
+        //when customer came to car play animation
         customer.GetComponent<Animator>().SetBool("isWalking", false);
         customerSource.PlayOneShot(getInCar);
         isMustGo = false;
         customer.SetActive(false);
-        //! GetComponent<Animation>().Play("leave");
-        CancelInvoke("customerLeave");
+        GetComponent<Animation>().Play("left");
     }
-    private void fillInProfile()
+    void checkCurrentPosition()
     {
-       for(int i = 0; i < 6 - new System.Random().Next(6); i++) 
-        { 
-            customerProfile.listOfId.Add(new System.Random().Next(39));
+        if(customerProfile.isNearShelving && Vector3.Distance(customer.transform.position,agent.destination) < 0.5f)
+        {//if customer came to shelving
+            StartCoroutine(gotoCasher());
+        }
+        else if(customerProfile.isNearCasher && Vector3.Distance(customer.transform.position, agent.destination) < 0.5f)
+        {//if customer came to casher
+            onCash();
+        }
+        else if(isMustGo && Vector3.Distance(customer.transform.position, agent.destination) < 0.5f) 
+        {//if customer going back to car
+            StartCoroutine(gotoCar());
         }
     }
-    
 }

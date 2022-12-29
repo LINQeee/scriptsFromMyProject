@@ -7,7 +7,8 @@ public class casherInteration : customerEventData, IInteractable
 {
     
     public string GetDescription()
-    {   if (!electricityEventData.isLeverUp) return "<color=red>you have to turn on the electricity to serve the customer</color>";
+    {
+          if (!electricityEventData.isLeverUp) return "<color=red>you have to turn on the electricity to serve the customer</color>";
         return isSomeoneWaitingForPay == true ? "<color=green>serve</color> the customer"
         : "<color=red>no</color> customers at the moment";
     }
@@ -22,7 +23,4 @@ public class casherInteration : customerEventData, IInteractable
     {
         return !isUIOpen;
     }
-
-    
-    
 }

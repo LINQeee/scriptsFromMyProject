@@ -46,7 +46,9 @@ public class animationManager : MonoBehaviour
         {
             animator.SetInteger("forwardBackTrigger", 0); animator.SetInteger("leftRightTrigger", 0); return;
         }
+        //tracking a and d buttons input
         horizontalCheck();
+        //tracking w and s buttons input
         verticalCheck();
     }
 }

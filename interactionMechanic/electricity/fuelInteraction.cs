@@ -11,14 +11,14 @@ public class fuelInteraction : electricityEventData, IInteractable
     private Quaternion fuelStartRotation;
 
     void Start()
-    {
+    {//reseting main values
         isFuelPickedUp = false;
         fuelStartPos = fuelObject.transform.position;
         fuelStartRotation = fuelObject.transform.rotation;
     }
 
     private void fuelPos()
-    {
+    {//fuel is folowing the player
         if (isFuelPickedUp)
         {
             fuelObject.transform.position = handPlace.transform.position;

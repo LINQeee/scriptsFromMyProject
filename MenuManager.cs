@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
-{
+{//TODO make difficult mechanic here
+//TODO settings play quit buttons
     public GameObject menu;
     public GameObject settingMenu;
     public void playButton_click()

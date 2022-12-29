@@ -7,6 +7,7 @@ public class soundPhoneChange : MonoBehaviour
     [SerializeField] private AudioClip onSound;
     [SerializeField] private AudioClip offSound;
     [SerializeField] private GameObject player;
+    //playing sounds for animations
     private void soundOn()
     {
        player.GetComponent<AudioSource>().PlayOneShot(onSound);

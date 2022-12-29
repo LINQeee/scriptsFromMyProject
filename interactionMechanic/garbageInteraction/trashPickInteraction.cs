@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class trashPickInteraction : garbageEventInfo, IInteractable
+public class trashPickInteraction : garbageEventData, IInteractable
 {
     [SerializeField] private AudioClip pickUpSound;
     void Start()
@@ -19,7 +19,7 @@ public class trashPickInteraction : garbageEventInfo, IInteractable
     public void Interact()
     {
         if (isGarbagePickedUp && countTrashInBag < limitOfTrash)
-        {
+        {//if garbage packet is not full take one trash
             countTrashInBag++;
             gameObject.SetActive(false);
             player.GetComponent<AudioSource>().PlayOneShot(pickUpSound);
@@ -28,10 +28,6 @@ public class trashPickInteraction : garbageEventInfo, IInteractable
     }
     public bool isEnableUI()
     {
-        if (isGarbagePickedUp)
-        {
-            return true;
-        }
-        return false;
+        return isGarbagePickedUp;
     }
 }

@@ -7,7 +7,8 @@ public class shelvesInterection : warehouseEventData, IInteractable
     [SerializeField] private GameObject player;
     
     public string GetDescription(){
-        if(isBoxInHand){
+        if(isBoxInHand)
+        {
         string colorOfBox = null;
         string colorOfShelf = null;
         switch(currentBox.tag){
@@ -26,7 +27,7 @@ public class shelvesInterection : warehouseEventData, IInteractable
         case "yellowBox": colorOfBox = "yellow";
             break;
         }
-
+        //checking color of box
         switch(transform.GetChild(0).tag){
         case "blackBox": colorOfShelf = "black";
             break;
@@ -43,7 +44,7 @@ public class shelvesInterection : warehouseEventData, IInteractable
         case "yellowBox": colorOfShelf = "yellow";
             break;
         }
-
+        //checking color of shelf
         if(currentBox.tag == transform.GetChild(0).tag) return "drop the box";
         else return $"Your box is {colorOfBox}, not {colorOfShelf}!";
         }

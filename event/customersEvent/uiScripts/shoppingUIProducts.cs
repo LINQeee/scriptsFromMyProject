@@ -7,7 +7,8 @@ public class shoppingUIProducts : MonoBehaviour
     [SerializeField] List<GameObject> listOfChildren = new List<GameObject>();
 
     public void bigger()
-    {
+    {//if customer took more than 3 products after game starts
+     //UI list of products become bigger
             foreach(var item in listOfChildren)
             {
                 item.transform.SetParent(null);
@@ -20,7 +21,8 @@ public class shoppingUIProducts : MonoBehaviour
             }
     }
     public void smaller()
-    {
+    {//if customer took more than 3 products after game ends
+     //UI list of products become smaller
             foreach (var item in listOfChildren)
             {
                 item.transform.SetParent(null);
