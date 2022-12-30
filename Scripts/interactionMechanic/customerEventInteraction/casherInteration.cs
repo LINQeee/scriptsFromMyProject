@@ -23,4 +23,8 @@ public class casherInteration : customerEventData, IInteractable
     {
         return !isUIOpen;
     }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
+    }
 }

@@ -46,4 +46,8 @@ public class busInteraction : warehouseEventData, IInteractable
             CancelInvoke();
         }
     }
+
+    public bool isAlwaysEnableOutline(){
+        return true;
+    }
 }

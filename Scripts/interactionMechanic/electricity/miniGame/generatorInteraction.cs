@@ -21,4 +21,8 @@ public class generatorInteraction : electricityEventData, IInteractable
         if(!sliderGame.isPlaying && !GameObject.Find("fuelMinigame").GetComponent<Animation>().isPlaying && isNeedFillFuel && isFuelPickedUp)
         GameObject.Find("fuelMinigame").GetComponent<sliderGame>().startPlaying();
     }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
+    }
 }

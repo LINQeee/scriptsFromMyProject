@@ -45,4 +45,8 @@ public class leverInteraction : electricityEventData, IInteractable
         generatorLigth.SetColor("_EmissiveColor", new Color(1024, 0, 0, 1));
 
     }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
+    }
 }

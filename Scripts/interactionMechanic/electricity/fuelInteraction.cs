@@ -58,4 +58,8 @@ public class fuelInteraction : electricityEventData, IInteractable
     {
         return true;
     }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
+    }
 }

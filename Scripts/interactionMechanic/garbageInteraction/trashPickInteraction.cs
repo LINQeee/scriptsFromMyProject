@@ -30,4 +30,8 @@ public class trashPickInteraction : garbageEventData, IInteractable
     {
         return isGarbagePickedUp;
     }
+
+    public bool isAlwaysEnableOutline(){
+        return true;
+    }
 }

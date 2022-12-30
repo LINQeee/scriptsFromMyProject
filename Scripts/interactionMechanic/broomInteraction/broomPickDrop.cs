@@ -60,5 +60,9 @@ public class broomPickDrop : MonoBehaviour, IInteractable
     {
         return true;
     }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
+    }
 }
 

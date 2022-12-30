@@ -64,4 +64,8 @@ public class shelvesInterection : warehouseEventData, IInteractable
 
     private void dropBox(){ isBoxInHand  = false; playerInteraction.isSomethingInHands = false;}
 
+    public bool isAlwaysEnableOutline(){
+        return true;
+    }
+
 }

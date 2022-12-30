@@ -24,6 +24,7 @@ public class dropToTrashInteraction : garbageEventData,IInteractable
             player.GetComponent<Animation>().PlayQueued("garbageDrop");
             player.GetComponent<AudioSource>().PlayOneShot(dropToGarbageSound);
             Invoke("setInvisible", 1);
+            playerInteraction.isSomethingInHands = false;
             isGarbagePickedUp = false;
             garbageEvent.takeOneTrash();
             countTrashInBag = 0;
@@ -37,5 +38,9 @@ public class dropToTrashInteraction : garbageEventData,IInteractable
     {
         garbage.transform.localScale = new Vector3(0.12f, 0.14f, 0.14f);
         garbage.SetActive(false);
+    }
+
+    public bool isAlwaysEnableOutline(){
+        return false;
     }
 }

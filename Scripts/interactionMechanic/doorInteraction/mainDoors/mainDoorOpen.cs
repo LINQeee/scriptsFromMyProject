@@ -34,4 +34,8 @@ public class mainDoorOpen : MonoBehaviour, IInteractable
     {
         return true;
     }
+
+    public bool isAlwaysEnableOutline(){
+        return true;
+    }
 }
